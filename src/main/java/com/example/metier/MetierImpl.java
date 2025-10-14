@@ -4,13 +4,13 @@ import com.example.dao.IDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import jakarta.annotation.PostConstruct;
 
 
 @Component("metier")
 public class MetierImpl implements IMetier  {
 
     @Autowired
-    @Qualifier("dao2")
     private IDao dao;
 
     @Override
@@ -22,5 +22,10 @@ public class MetierImpl implements IMetier  {
     // Setter pour l'injection par setter (alternative à l'injection par champ)
     public void setDao(IDao dao) {
         this.dao = dao;
+    }
+
+    @PostConstruct
+    private void init() {
+        System.out.println("[TRACE] DAO injecté = " + dao.getClass().getSimpleName());
     }
 }
